@@ -56,13 +56,18 @@ def start():
     humanMove()
 
 def humanMove():
+    winner = check_winner()
+    if winner:
+        print(f'{winner} har vunnet!')
+        return
+    os.system('cls')
     printBoard()
     empty_positions = [key for key, value in board.items() if value == ' ']
     if empty_positions:
         move = input('Hvor vil du sette ' + userIcon +'? (a1, a2, a3, b1, b2, b3, c1, c2, c3) ')
         if not board[move] == ' ':
             print('Velg en ledig plass')
-            firstMove()
+            humanMove()
         board[move] = userIcon
         printBoard()
         winner = check_winner()
@@ -77,6 +82,9 @@ def humanMove():
 
 
 def aiMove():
+    if winner:
+        print(f'{winner} har vunnet!')
+        return
     empty_positions = [key for key, value in board.items() if value == ' ']
     if not empty_positions:
         print('Uavgjort')
@@ -88,9 +96,6 @@ def aiMove():
     board[ai_move] = aiIcon
     printBoard()
     winner = check_winner()
-    if winner:
-        print(f'{winner} har vunnet!')
-        return
     os.system('cls')
     humanMove()
 
